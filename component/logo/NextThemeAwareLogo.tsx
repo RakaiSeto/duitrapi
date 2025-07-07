@@ -13,7 +13,7 @@ export default function ThemeAwareLogo({ width = 180, height = 38 }: NextLogoDim
 
     return (
         <Image
-            src={theme === 'dark' ? '/nextDark.svg' : '/next.svg'}
+            src={`/images/${theme === 'dark' ? 'nextDark' : 'next'}.svg`}
             alt="Next.js logo"
             width={width}
             height={height}
