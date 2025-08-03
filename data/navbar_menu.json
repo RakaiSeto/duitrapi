@@ -1,0 +1,16 @@
+{
+    "default": [
+        {
+            "display": "Home",
+            "href": "#"
+        },
+        {
+            "display": "Features",
+            "href": "#features"
+        },
+        {
+            "display": "Pricing",
+            "href": "#pricing"
+        }
+    ]
+}

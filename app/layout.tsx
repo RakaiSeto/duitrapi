@@ -1,7 +1,14 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/component/javascript/ThemeProvider';
+import { ThemeProvider } from '@/utils/ThemeProvider';
+import { config, library } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
+
+config.autoAddCss = false;
+library.add(fas, faHouse);
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -38,7 +45,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" className='scroll-smooth'>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <ThemeProvider>{children}</ThemeProvider>
             </body>

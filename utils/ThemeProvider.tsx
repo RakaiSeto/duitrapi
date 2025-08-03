@@ -20,13 +20,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
             setThemeState(savedTheme);
             document.documentElement.setAttribute('data-theme', savedTheme);
         } 
-        // else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        //     setThemeState('dark');
-        //     document.documentElement.setAttribute('data-theme', 'dark');
-        // } else {
-        //     setThemeState('light');
-        //     document.documentElement.setAttribute('data-theme', 'light');
-        // }
+        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setThemeState('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            setThemeState('light');
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
     }, []);
 
     const setTheme = (newTheme: Theme) => {

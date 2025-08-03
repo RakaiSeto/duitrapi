@@ -1,13 +1,28 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 :root {
     --background: #ededed;
     --foreground: #020c26;
+    --nav-bg: rgba(237, 237, 237, 0.8);
+    --nav-glow: #83b4ff;
 }
 
 html[data-theme='dark'] {
     --background: #020c26;
     --foreground: #ededed;
+    --nav-bg: rgba(2, 10, 31, 0.85);
+    --nav-glow: #2b7fff;
+}
+
+.navbar {
+    background-color: var(--nav-bg);
+    color: var(--foreground);
+}
+
+@theme {
+    --color-nav-shadow: var(--nav-glow);
 }
 
 @theme inline {
