@@ -25,11 +25,6 @@ export const metadata: Metadata = {
     description: 'DuitRapi',
 };
 
-export const themeColor = [
-    { media: '(prefers-color-scheme: light)', color: '#ededed' },
-    { media: '(prefers-color-scheme: dark)', color: '#020c26' },
-];
-
 export const viewport: Viewport = {
     width: 'device-width',
     initialScale: 1,

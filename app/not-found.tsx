@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Custom404() {
     return (
@@ -8,7 +9,7 @@ export default function Custom404() {
             </div>
             <h1 className="text-4xl font-bold">404 - Page Not Found</h1>
             <p className="text-lg">The page you are looking for does not exist.</p>
-            <a href="/" className="mt-3 bg-blue-500 text-white px-4 py-2 rounded-md">Go to Home</a>
+            <Link href="/" className="mt-3 bg-blue-500 text-white px-4 py-2 rounded-md">Go to Home</Link>
         </div>
     )
 }
