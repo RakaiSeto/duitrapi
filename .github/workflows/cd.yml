@@ -24,6 +24,7 @@ jobs:
             sudo git pull
             sudo git status
             
+            sudo rm -rf .next
             npm i
             npm run build
             pm2 restart 10
