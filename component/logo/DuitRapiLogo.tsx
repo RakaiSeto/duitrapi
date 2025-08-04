@@ -10,7 +10,7 @@ interface DuitRapiLogoDimension {
 export default function DuitRapiLogo({ width = 25, height = 25 }: DuitRapiLogoDimension) {
     return (
         <Image
-            src={`/images/duitrapi.png`}
+            src={`/images/DuitRapi.png`}
             alt="DuitRapi Logo"
             width={width}
             height={height}
