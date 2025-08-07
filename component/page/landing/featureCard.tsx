@@ -23,8 +23,8 @@ export function FeatureCard({
     classes,
 }: IconAttribute & CardProperties) {
     return (
-        <div className="flex flex-col items-start rounded-lg p-4 bg-gray-700/50 gap-2 flex-1 ">
-            <div className="flex flex-row items-center justify-center w-[3.5rem] h-[3.5rem] bg-gradient-to-r from-[#4E72FF] to-[#65A5FF] rounded-lg">
+        <div className="flex flex-col items-start rounded-lg p-4 bg-neutral-100 shadow-gray-300 shadow-md dark:shadow-none dark:bg-gray-700/50 gap-2 flex-1 ">
+            <div className="flex flex-row items-center text-white justify-center w-[3.5rem] h-[3.5rem] bg-gradient-to-r from-[#4E72FF] to-[#65A5FF] rounded-lg">
                 <FontAwesomeIcon
                     icon={icon}
                     spin={spin}

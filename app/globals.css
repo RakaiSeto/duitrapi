@@ -3,10 +3,10 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root {
-    --background: #ededed;
-    --foreground: #020c26;
+    --background: #f9fafc;
+    --foreground: #374151;
     --nav-bg: rgba(237, 237, 237, 0.8);
-    --nav-glow: #83b4ff;
+    --nav-glow: #7b8493;
 }
 
 html[data-theme='dark'] {
@@ -14,7 +14,7 @@ html[data-theme='dark'] {
     --foreground: #ededed;
     --nav-bg: rgba(2, 10, 31, 0.85);
     --nav-glow: #2b7fff;
-}
+};
 
 .navbar {
     background-color: var(--nav-bg);

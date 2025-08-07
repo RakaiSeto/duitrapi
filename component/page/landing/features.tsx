@@ -4,7 +4,7 @@ import { faTelegram } from "@fortawesome/free-brands-svg-icons";
 
 export function Features() {
     return (
-        <div className="about flex flex-col mt-[10rem] text-center scroll-mt-[6rem]" id="features">
+        <div className="about flex flex-col mt-[10rem] text-center scroll-mt-[6rem] dark:bg" id="features">
             <span className="text-3xl">Powerful Features at Your Disposal</span>
 
             <div className="flex flex-row gap-6 mt-10 justify-evenly">

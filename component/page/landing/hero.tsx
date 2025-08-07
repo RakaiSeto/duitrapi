@@ -8,12 +8,14 @@ export function Hero() {
             </div>
 
             <div className="flex gap-[2rem] mt-[3.5rem] justify-center items-center">
-                <a href="/login" className="bg-gradient-to-r from-[#4E72FF] to-[#65A5FF] text-white px-[2rem] py-[1rem] rounded-[0.8rem]">Start Now</a>
+                <a href="/login" className="bg-gradient-to-r from-[#4E72FF] to-[#65A5FF] text-white px-[2rem] ms-[-0.5rem] py-[1rem] rounded-[0.8rem]">Start Now</a>
                 
-                <a href="#about" className="text-lg">Learn More About <span className="text-[#4E72FF]">Duit</span><span className="text-[#8EBDFF]">Rapi</span><span aria-hidden="true">→</span></a> 
+                {/* <a href="#about" className="text-lg">Learn More About <span className="text-[#4E72FF]">Duit</span><span className="text-[#8EBDFF]">Rapi</span><span aria-hidden="true">→</span></a>  */}
             </div>
 
-            <img src="https://placehold.co/640x360" className="justify-self-center mx-auto mt-[5rem] rounded-[1rem] shadow-nav-shadow shadow-md" alt="Hero" />
+            <div className="flex flex-col gap-[2rem]">
+                <img src="https://placehold.co/640x360" className="justify-self-center mx-auto mt-[5rem] rounded-[1rem] shadow-gray-300 dark:shadow-nav-shadow shadow-md" alt="Hero" />
+            </div>
         </div>
     );
 }

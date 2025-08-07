@@ -6,7 +6,7 @@ export function Pricing() {
                 <span className="text-[#8EBDFF]">Rapi</span> is Completely Cost-Free!
             </span>
 
-            <div className="flex flex-col text-center rounded-lg p-[2rem] bg-gray-700/50 gap-2 w-[25rem]" id="pricing-card">
+            <div className="flex flex-col text-center rounded-lg p-[2rem] bg-neutral-100 shadow-gray-300 shadow-md dark:shadow-none dark:bg-gray-700/50 gap-2 w-[25rem]" id="pricing-card">
                 <div className="flex flex-col gap-0 mb-4">
                     <span className="text-start text-2xl">Free</span>
                     <span className="text-start text-md text-gray-400 pt-0">All your finance tracker needs in one place</span>
