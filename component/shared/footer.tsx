@@ -5,7 +5,7 @@ import DuitRapiLogo from "../logo/DuitRapiLogo";
 export function Footer() {
     const year = new Date().getFullYear();
     return (
-        <footer className="bg-gray-900 border-t border-gray-800">
+        <footer className="bg-white dark:bg-gray-900 border-t border-gray-800">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0 flex items-start gap-2">
@@ -17,8 +17,8 @@ export function Footer() {
                     </div>
                     <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                         <div>
-                            <h2 className="mb-6 text-sm font-semibold text-gray-400 uppercase">Resources</h2>
-                            <ul className="text-gray-300 space-y-4">
+                            <h2 className="mb-6 text-sm font-semibold text-gray-800 dark:text-gray-400 uppercase">Resources</h2>
+                            <ul className="text-gray-700 dark:text-gray-300 space-y-4">
                                 <li>
                                     <a target="_blank" href="https://mail.google.com/mail/?view=cm&fs=1&to=rakaiseto@gmail.com&su=DuitRapi%20Problem%20[Insert%20Your%20Issue%20Here]" className="hover:underline">
                                         Help Center
@@ -32,8 +32,8 @@ export function Footer() {
                             </ul>
                         </div>
                         <div>
-                            <h2 className="mb-6 text-sm font-semibold text-gray-400 uppercase">Follow me</h2>
-                            <ul className="text-gray-300 space-y-4">
+                            <h2 className="mb-6 text-sm font-semibold text-gray-800 dark:text-gray-400 uppercase">Follow me</h2>
+                            <ul className="text-gray-700 dark:text-gray-300 space-y-4">
                                 <li>
                                     <a target="_blank" href="https://www.linkedin.com/in/rakai-seto-sembodo/" className="hover:underline">
                                         LinkedIn

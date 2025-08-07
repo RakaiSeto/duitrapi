@@ -16,9 +16,9 @@ export function Navbar() {
             <div className="flex-4 flex items-center">
                 <NavbarMenu />
             </div>
-            {/* <div className="flex-1 flex justify-end items-center">
+            <div className="flex-1 flex justify-end items-center">
                 <ThemeSwitcher />
-            </div> */}
+            </div>
         </div>
     );
 }
