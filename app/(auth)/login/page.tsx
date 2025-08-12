@@ -7,7 +7,7 @@ export default function LoginPage() {
     const { setMessage, setSubmessage } = useAuthLayoutContext();
 
     useEffect(() => {
-        setMessage(<span className="text-3xl">Welcome Back!</span>);
+        setMessage(<span className="text-3xl">Welcome Back to <span className="text-[#4E72FF]">Duit</span><span className="text-[#8EBDFF]">Rapi</span>!</span>);
         setSubmessage(<span className="text-neutral-500 dark:text-neutral-400 text-sm">Login to your account to continue</span>);
     }, []);
 
