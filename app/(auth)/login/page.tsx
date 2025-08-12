@@ -17,12 +17,14 @@ export default function LoginPage() {
             <div className="flex flex-col gap-y-2 w-full">
                 <label htmlFor="email" className="text-neutral-500 dark:text-neutral-400 text-sm">Email</label>
                 <input type="email" id="email" className="w-full p-2 rounded-md border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800" />
+                <span className="text-red-500 dark:text-red-400 text-sm hidden">Account not found</span>
             </div>
 
             {/* password */}
             <div className="flex flex-col gap-y-2 w-full">
                 <label htmlFor="password" className="text-neutral-500 dark:text-neutral-400 text-sm">Password</label>
                 <input type="password" id="password" className="w-full p-2 rounded-md border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800" />
+                <span className="text-red-500 dark:text-red-400 text-sm hidden">Wrong credentials</span>
             </div>
 
             {/* forgot password */}
