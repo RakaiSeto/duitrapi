@@ -1,6 +1,6 @@
 import { ThemeSwitcher } from '@/component/shared/themeSwitcher';
 import DuitRapiLogo from '@/component/logo/DuitRapiLogo';
-import AuthLayoutCard from '@/component/page/auth/AuthLayoutCard';
+import AuthLayoutCard from '@/component/page/auth/AuthLayoutComponent';
 import { AuthLayoutProvider } from '@/context/auth/AuthLayoutContext';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
