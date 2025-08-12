@@ -24,12 +24,8 @@ export default function AuthLayoutCard({ children }: { children: React.ReactNode
                     </div>
                     <div className="flex-1 flex flex-col items-start justify-start">
                         <div className="flex flex-col mt-[-0.2rem] gap-y-2">
-                            {message && <span className="flex items-center gap-x-2 text-3xl">{message}</span>}
-                            {submessage && (
-                                <span className="flex items-center gap-x-2 text-neutral-500 dark:text-neutral-400 text-xl">
-                                    {submessage}
-                                </span>
-                            )}
+                            {message && message}
+                            {submessage && submessage}
                         </div>
                         {children}
                     </div>
