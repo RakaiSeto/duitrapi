@@ -8,13 +8,13 @@ export default function LoginPage() {
 
     // do check connection
     useEffect(() => {
-        fetch('/api/connection')
+        fetch('/api/role')
             .then(response => response.json())
             .then(data => {
                 console.log(data);
             })
             .catch(error => {
-                console.error('Error checking connection:', error);
+                console.error('Error fetching roles:', error);
             });
     }, []);
 

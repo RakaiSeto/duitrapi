@@ -1,20 +1,28 @@
-import Role from "../models/role"
-import { RoleInput, RoleOuput } from "../models/role"
+import { rolesTable } from "../models/roles"
+import db from "../connection";
+import { eq } from "drizzle-orm";
 
-export const create = async (payload: RoleInput): Promise<RoleOuput> => {
-    const role = await Role.create(payload);
-    return role;
+type Roles = typeof rolesTable.$inferSelect;
+
+export interface RoleInput {
+    roleId: number;
+    roleName: string;
 }
 
-export const findAll = async (): Promise<RoleOuput[]> => {
-    const roles = await Role.findAll();
+export const create = async (payload: RoleInput): Promise<Roles> => {
+    const role = await db.insert(rolesTable).values(payload).returning();
+    return role[0] as Roles;
+}
+
+export const findAll = async (): Promise<Roles[]> => {
+    const roles = await db.select().from(rolesTable);
     return roles;
 }
 
-export const getById = async (id: number): Promise<RoleOuput | null> => {
-    const role = await Role.findByPk(id);
+export const getById = async (id: number): Promise<Roles | null> => {
+    const role = await db.select().from(rolesTable).where(eq(rolesTable.roleId, id));
     if (!role) {
         throw new Error('Role not found');
     }
-    return role;
+    return role[0] as Roles;
 }

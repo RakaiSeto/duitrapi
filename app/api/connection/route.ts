@@ -1,9 +1,9 @@
-import sequelize from '@/db/connection';
+import { testDbConnection } from '@/db/connection';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
     try {
-        await sequelize.authenticate();
+        testDbConnection();
         console.log('Connection has been established successfully.');
         return NextResponse.json({ message: 'Database connection successful' });
     } catch (error: unknown) {
