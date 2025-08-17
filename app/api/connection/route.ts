@@ -1,4 +1,4 @@
-import sequelize from '@/models/database/connection';
+import sequelize from '@/db/connection';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
