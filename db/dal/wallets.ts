@@ -1,5 +1,5 @@
 import { walletsTable } from '../models/wallets';
-import { GetAllWalletsFilter } from './filters/wallets';
+import { GetAllWalletsFilter } from './filters/walletsFilter';
 import db from '../connection';
 import { and, ilike, eq } from 'drizzle-orm';
 
