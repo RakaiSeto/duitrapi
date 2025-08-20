@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
         payload.password = hashedPW;
         console.log(hashedPW)
-        payload.roleId = 1;
+        payload.roleId = 2;
         const user = await userDal.create(payload);
         logToQueue(payload.email, 'AUTH', 'Register', true, 'User created')
         return NextResponse.json(user);

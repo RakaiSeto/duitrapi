@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuthLayoutContext } from '@/context/auth/AuthLayoutContext';
-import router from 'next/router';
+import router from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function LoginPage() {
@@ -50,8 +50,10 @@ export default function LoginPage() {
         });
         const data = await response.json();
         if (data.success) {
-            localStorage.setItem('token', data.token);
-            router.push('/');
+            // save token to cookie
+            document.cookie = `token=${data.token}; path=/`;
+            // redirect to home
+            router.redirect('/');
         } else {
             if (data.type === 'email') {
                 setEmailError(data.message);
