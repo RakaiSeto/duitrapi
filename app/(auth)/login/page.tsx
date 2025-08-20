@@ -1,22 +1,15 @@
 'use client';
 
 import { useAuthLayoutContext } from '@/context/auth/AuthLayoutContext';
-import { useEffect } from 'react';
+import router from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function LoginPage() {
     const { setMessage, setSubmessage } = useAuthLayoutContext();
-
-    // do check connection
-    useEffect(() => {
-        fetch('/api/role')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('Error fetching roles:', error);
-            });
-    }, []);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [emailError, setEmailError] = useState('');
 
     useEffect(() => {
         setMessage(
@@ -27,6 +20,48 @@ export default function LoginPage() {
         );
         setSubmessage(<span className="text-neutral-500 dark:text-neutral-400 text-sm">Login to your account to continue</span>);
     }, []);
+
+    const handleLogin = async () => {
+        if (!email || !password) {
+            setEmailError('Email is required');
+            setPasswordError('Password is required');
+            return;
+        }
+
+        // check if email is valid
+        if (!email.includes('@')) {
+            setPasswordError('');
+            setEmailError('Invalid email');
+            return;
+        }
+        // check if password is valid
+        if (password.length < 8) {
+            setEmailError('');
+            setPasswordError('Password must be at least 8 characters');
+            return;
+        }
+
+        setEmailError('');
+        setPasswordError('');
+
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+        });
+        const data = await response.json();
+        if (data.success) {
+            localStorage.setItem('token', data.token);
+            router.push('/');
+        } else {
+            if (data.type === 'email') {
+                setEmailError(data.message);
+                setPasswordError('');
+            } else if (data.type === 'password') {
+                setPasswordError(data.message);
+                setEmailError('');
+            }
+        }
+    };
 
     return (
         <div className="flex flex-col gap-y-4 mt-[2rem] w-[75%]">
@@ -39,8 +74,10 @@ export default function LoginPage() {
                     type="email"
                     id="email"
                     className="w-full p-2 rounded-md border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
-                <span className="text-red-500 dark:text-red-400 text-sm hidden">Account not found</span>
+                <span className="text-red-500 dark:text-red-400 text-sm">{emailError}</span>
             </div>
 
             {/* password */}
@@ -52,8 +89,10 @@ export default function LoginPage() {
                     type="password"
                     id="password"
                     className="w-full p-2 rounded-md border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
-                <span className="text-red-500 dark:text-red-400 text-sm hidden">Wrong credentials</span>
+                <span className="text-red-500 dark:text-red-400 text-sm">{passwordError}</span>
             </div>
 
             {/* forgot password */}
@@ -64,7 +103,7 @@ export default function LoginPage() {
             </div>
 
             {/* login button (no div) */}
-            <button className="w-full p-2 rounded-md bg-gradient-to-r from-[#4E72FF] to-[#65A5FF] text-white dark:text-white cursor-pointer hover:scale-105 transition-all ease-in-out duration-300">
+            <button className="w-full p-2 rounded-md bg-gradient-to-r from-[#4E72FF] to-[#65A5FF] text-white dark:text-white cursor-pointer hover:scale-105 transition-all ease-in-out duration-300" onClick={handleLogin}>
                 Login
             </button>
 

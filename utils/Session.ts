@@ -3,8 +3,9 @@ import Cookie  from 'cookie';
 
 
 export type JwtPayload = {
-  userId: string;
-  username: string;
+  sub: string;
+  email: string;
+  admin: boolean
   iat?: number;
   exp?: number;
 };
@@ -22,4 +23,8 @@ export function verifyJwt(token: string): JwtPayload | null {
     console.error('JWT verification failed:', error);
     return null;
   }
+}
+
+export function generateJwt(payload: JwtPayload): string {
+  return Jwt.sign(payload, process.env.JWT_SECRET!);
 }

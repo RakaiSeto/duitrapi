@@ -7,7 +7,6 @@ import { and, ilike, eq } from 'drizzle-orm';
 type Users = typeof usersTable.$inferSelect;
 
 export const create = async (payload: Users): Promise<Users> => {
-    payload.password = await hashPassword(payload.password);
     const user = await db.insert(usersTable).values(payload).returning();
     return user[0] as Users;
 };
@@ -24,6 +23,14 @@ export const getAll = async (filter?: GetAllUsersFilter): Promise<Users[]> => {
 
 export const getById = async (id: string): Promise<Users | null> => {
     const user = await db.select().from(usersTable).where(eq(usersTable.userId, id));
+    if (!user) {
+        throw new Error('User not found');
+    }
+    return user[0] as Users;
+};
+
+export const getByEmail = async (email: string): Promise<Users | null> => {
+    const user = await db.select().from(usersTable).where(eq(usersTable.email, email));
     if (!user) {
         throw new Error('User not found');
     }
