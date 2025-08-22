@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuthLayoutContext } from '@/context/auth/AuthLayoutContext';
-import router from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function LoginPage() {
@@ -10,6 +10,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [emailError, setEmailError] = useState('');
+    const router = useRouter();
 
     useEffect(() => {
         setMessage(
@@ -53,7 +54,7 @@ export default function LoginPage() {
             // save token to cookie
             document.cookie = `token=${data.token}; path=/`;
             // redirect to home
-            router.redirect('/admin');
+            router.push('/admin');
         } else {
             if (data.type === 'email') {
                 setEmailError(data.message);
@@ -105,7 +106,10 @@ export default function LoginPage() {
             </div>
 
             {/* login button (no div) */}
-            <button className="w-full p-2 rounded-md bg-gradient-to-r from-[#4E72FF] to-[#65A5FF] text-white dark:text-white cursor-pointer hover:scale-105 transition-all ease-in-out duration-300" onClick={handleLogin}>
+            <button
+                className="w-full p-2 rounded-md bg-gradient-to-r from-[#4E72FF] to-[#65A5FF] text-white dark:text-white cursor-pointer hover:scale-105 transition-all ease-in-out duration-300"
+                onClick={handleLogin}
+            >
                 Login
             </button>
 
