@@ -1,4 +1,5 @@
 import Jwt from 'jsonwebtoken';
+import * as Jose from 'jose';
 import Cookie  from 'cookie';
 
 
@@ -16,15 +17,20 @@ export function parseAuthCookie(cookieHeader: string | undefined): string | null
   return cookies.authToken || null;
 }
 
-export function verifyJwt(token: string): JwtPayload | null {
+export async function verifyJwt(token: string): Promise<JwtPayload | null> {
   try {
-    return Jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    const { payload } = await Jose.jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET!));
+    return payload as JwtPayload;
   } catch (error) {
     console.error('JWT verification failed:', error);
     return null;
   }
 }
 
-export function generateJwt(payload: JwtPayload): string {
-  return Jwt.sign(payload, process.env.JWT_SECRET!);
+export async function generateJwt(payload: JwtPayload): Promise<string> {
+  const t = await new Jose.SignJWT(payload)
+    .setProtectedHeader({ alg: 'HS256' })
+    .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
+
+  return t;
 }

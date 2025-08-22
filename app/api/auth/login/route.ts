@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
         console.log(payload.password)
         console.log(bcryptUtil.hashPassword(payload.password))
     
-        const isPasswordValid = await bcryptUtil.comparePassword(payload.password, user.password);
+        const isPasswordValid = bcryptUtil.comparePassword(payload.password, user.password);
         if (!isPasswordValid) {
             logToQueue(user.email, 'AUTH', 'Login', false, 'Invalid password')
             return NextResponse.json({ success: false, type: 'password', message: 'Invalid password' }, { status: 401 });
@@ -28,10 +28,12 @@ export async function POST(request: NextRequest) {
             iat: Date.now(),
             exp: Date.now() + 1000 * 60 * 60 * 24,
         }
-        let jwt = generateJwt(jwtPayload);
+        let jwt = await generateJwt(jwtPayload);
 
         logToQueue(user.email, 'AUTH', 'Login', true, 'Login successful')
-        return NextResponse.json({ success: true, message: 'Login successful', token: jwt }, { status: 200 });
+        const response = new NextResponse(JSON.stringify({ success: true, message: 'Login successful', token: jwt }), { status: 200 });
+        response.cookies.set('token', jwt);
+        return response;
     } catch (error) {
         console.error('Error logging in:', error);
         let errorJson = JSON.stringify(error);

@@ -53,7 +53,7 @@ export default function LoginPage() {
             // save token to cookie
             document.cookie = `token=${data.token}; path=/`;
             // redirect to home
-            router.redirect('/');
+            router.redirect('/admin');
         } else {
             if (data.type === 'email') {
                 setEmailError(data.message);
