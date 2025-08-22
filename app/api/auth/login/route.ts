@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
         let jwt = await generateJwt(jwtPayload);
 
         logToQueue(user.email, 'AUTH', 'Login', true, 'Login successful')
-        const response = new NextResponse(JSON.stringify({ success: true, message: 'Login successful', token: jwt }), { status: 200 });
+        const response = new NextResponse(JSON.stringify({ success: true, message: 'Login successful', token: jwt, admin: user.roleId === 1 }), { status: 200 });
         response.cookies.set('token', jwt);
         return response;
     } catch (error) {
