@@ -20,7 +20,6 @@ export async function middleware(request: NextRequest) {
     if (token) {
         // if token is not found, redirect to login
         const decoded = await jwt.verifyJwt(token) as unknown as JwtPayload;
-        console.log(decoded);
         if (decoded && decoded.exp && decoded.exp > Date.now() / 1000) {
             isAuthenticated = true;
         }
