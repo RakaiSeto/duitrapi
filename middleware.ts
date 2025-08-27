@@ -15,18 +15,18 @@ export async function middleware(request: NextRequest) {
     const token = request.cookies.get('token')?.value;
     if (!token && !isLoginPath && !isRegisterPath) {
         return NextResponse.redirect(new URL('/login', request.url));
-    } 
+    }
 
     if (token) {
         // if token is not found, redirect to login
         const decoded = await jwt.verifyJwt(token) as unknown as JwtPayload;
-        if (decoded && decoded.exp && decoded.exp > Date.now() / 1000) {
+        if (decoded && decoded.exp && decoded.exp > Date.now()) {
             isAuthenticated = true;
         }
         if (decoded && decoded.admin) {
             isAdmin = true;
         }
-        if (!isAuthenticated) {
+        if (!isAuthenticated && !isLoginPath) {
             return NextResponse.redirect(new URL('/login', request.url));
         }
     }

@@ -1,12 +1,11 @@
-import Jwt from 'jsonwebtoken';
 import * as Jose from 'jose';
-import Cookie  from 'cookie';
-
+import Cookie from 'cookie';
 
 export type JwtPayload = {
   sub: string;
   email: string;
-  admin: boolean
+  fullName: string;
+  admin: boolean;
   iat?: number;
   exp?: number;
 };
@@ -33,4 +32,9 @@ export async function generateJwt(payload: JwtPayload): Promise<string> {
     .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
   return t;
+}
+
+export async function getUserFromJwt(token: string): Promise<JwtPayload | null> {
+    const decoded = (await verifyJwt(token)) as unknown as JwtPayload;
+    return decoded;
 }

@@ -9,12 +9,9 @@ export async function POST(request: NextRequest) {
     try {
         const user = await userDal.getByEmail(payload.email);
         if (!user) {
-            logToQueue('127.0.0.1', 'AUTH', 'Login', false, 'User not found')
+            logToQueue(request.headers.get('x-forwarded-for') ?? '127.0.0.1', 'AUTH', 'Login', false, 'User not found')
             return NextResponse.json({ success: false, type:'email', message: 'User not found' }, { status: 400 });
         }
-        console.log(user.password)
-        console.log(payload.password)
-        console.log(bcryptUtil.hashPassword(payload.password))
     
         const isPasswordValid = bcryptUtil.comparePassword(payload.password, user.password);
         if (!isPasswordValid) {
@@ -24,6 +21,7 @@ export async function POST(request: NextRequest) {
         let jwtPayload: JwtPayload = {
             sub: user.userId,
             email: user.email,
+            fullName: user.fullname,
             admin: user.roleId === 1,
             iat: Date.now(),
             exp: Date.now() + 1000 * 60 * 60 * 24,
