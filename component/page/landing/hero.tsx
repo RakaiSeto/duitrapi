@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export function Hero() {
     return (
         <div className="hero flex-col gap-[2rem] mt-[7.5rem] scroll-mt-[6rem]" id="hero">
@@ -14,7 +16,7 @@ export function Hero() {
             </div>
 
             <div className="flex flex-col gap-[2rem]">
-                <img src="https://placehold.co/640x360" className="justify-self-center mx-auto mt-[5rem] rounded-[1rem] shadow-gray-300 dark:shadow-nav-shadow shadow-md" alt="Hero" />
+                <Image src="https://placehold.co/640x360" className="justify-self-center mx-auto mt-[5rem] rounded-[1rem] shadow-gray-300 dark:shadow-nav-shadow shadow-md" alt="Hero" width={640} height={360} />
             </div>
         </div>
     );

@@ -2,22 +2,10 @@ import DuitRapiLogo from '@/component/logo/DuitRapiLogo';
 import { NavbarMenu } from './menu';
 import { ThemeSwitcher } from '../themeSwitcher';
 import UserButton from './userButton';
-import { cookies } from 'next/headers';
-import { getUserFromJwt } from '@/utils/Session';
+import { getProfileInfo } from '@/utils/Tools';
 
 export async function Navbar() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('token')?.value; // Get the token directly on the server
-    let userName = null;
-    let isAdmin = false;
-    let isLoggedIn = false;
-    if (token) {
-        const payload = await getUserFromJwt(token); // Decrypt the token
-
-        userName = payload ? (payload.fullName as string) : null; // Get the user's name from the payload
-        isAdmin = payload ? (payload.admin as boolean) : false;
-        isLoggedIn = payload ? ((payload.exp && payload.exp > Date.now()) as boolean) : false;
-    }
+    const { userName, isAdmin, isLoggedIn } = await getProfileInfo();
 
     return (
         <div

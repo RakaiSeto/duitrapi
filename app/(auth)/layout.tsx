@@ -2,8 +2,12 @@ import { ThemeSwitcher } from '@/component/shared/themeSwitcher';
 import DuitRapiLogo from '@/component/logo/DuitRapiLogo';
 import AuthLayoutCard from '@/component/page/auth/AuthLayoutComponent';
 import { AuthLayoutProvider } from '@/context/auth/AuthLayoutContext';
+import { getProfileInfo } from '@/utils/Tools';
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+
+export async function AuthLayout({ children }: { children: React.ReactNode }) {
+    const { userName, isAdmin } = await getProfileInfo();
+
     return (
         <div className="flex flex-col items-center justify-center h-screen ">
             <div className="absolute top-[0.5rem] right-[0.5rem] z-10">
@@ -18,7 +22,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                     </span>
                 </a>
             </div>
-            <AuthLayoutProvider>
+            <AuthLayoutProvider userName={userName} isAdmin={isAdmin} >
                 <AuthLayoutCard>{children}</AuthLayoutCard>
             </AuthLayoutProvider>
         </div>

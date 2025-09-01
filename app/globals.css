@@ -11,7 +11,7 @@
 
 html[data-theme='dark'] {
     --background: #020c26;
-    --foreground: #ededed;
+    --foreground: #d5d2d2;
     --nav-bg: rgba(2, 10, 31, 0.85);
     --nav-glow: #2b7fff;
 };

@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
         domains: ['placehold.co'],
         unoptimized: true,
     },
-    serverExternalPackages: ['sequelize', 'pg'],
+    serverExternalPackages: ['pg'],
 };
 
 export default nextConfig;

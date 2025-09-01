@@ -11,7 +11,7 @@ interface AuthLayoutContextType {
 
 const AuthLayoutContext = createContext<AuthLayoutContextType | undefined>(undefined);
 
-export function AuthLayoutProvider({ children }: { children: ReactNode }) {
+export function AuthLayoutProvider({ children, userName, isAdmin }: { children: ReactNode, userName: string, isAdmin: boolean }) {
     const [message, setMessage] = useState<ReactNode>(null);
     const [submessage, setSubmessage] = useState<ReactNode>(null);
 
