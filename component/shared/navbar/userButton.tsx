@@ -26,8 +26,8 @@ export default function UserButton({
         return (
             <a
                 href="/login"
-                className="inline-flex items-center gap-x-2 rounded-full px-4 py-2 text-sm font-medium text-white transition-colors
-                bg-[#616c89] hover:bg-[#525a74] dark:bg-white/10 dark:hover:bg-white/20"
+                className="inline-flex items-center gap-x-2 rounded-full px-4 py-2 text-sm font-medium border dark:border-none transition-colors
+                bg-[#fbfbfb] hover:bg-[#374151] hover:text-white dark:bg-white/10 dark:hover:bg-white/20"
             >
                 Login <FontAwesomeIcon icon={faRightToBracket} />
             </a>
@@ -60,7 +60,7 @@ export default function UserButton({
                 >
                     <div className="">
                         <a
-                            href={isAdmin ? '/admin' : '/dashboard'}
+                            href={isAdmin ? '/admin' : '/user'}
                             className="block px-4 py-2 text-sm transition-colors hover:bg-[#374151] hover:text-white dark:hover:bg-white/20"
                             role="menuitem"
                             tabIndex={-1}

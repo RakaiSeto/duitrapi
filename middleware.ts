@@ -35,12 +35,12 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/admin', request.url));
     }
     if (!isAdmin && isAdminPath) {
-        return NextResponse.redirect(new URL('/dashboard', request.url));
+        return NextResponse.redirect(new URL('/user', request.url));
     }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/login', '/register', '/admin/:path*', '/dashboard/:path*'], // Apply middleware to these paths
+    matcher: ['/login', '/register', '/admin/:path*', '/user/:path*'], // Apply middleware to these paths
 };

@@ -5,7 +5,7 @@ import { AuthLayoutProvider } from '@/context/auth/AuthLayoutContext';
 import { getProfileInfo } from '@/utils/Tools';
 
 
-export async function AuthLayout({ children }: { children: React.ReactNode }) {
+export default async function AuthLayout({ children }: { children: React.ReactNode }) {
     const { userName, isAdmin } = await getProfileInfo();
 
     return (
