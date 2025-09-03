@@ -1,15 +1,11 @@
 'use client';
 
-import Header from '../shared/header';
-import Sidebar from '../shared/sidebar/sidebar';
+import Header from '../../shared/header';
+import Sidebar from '../../shared/sidebar/sidebar';
 import { useEffect, useState } from 'react';
 import { useDashboardLayoutContext } from '@/context/auth/DashboardLayoutContext';
 
-export default function DashboardLayoutComponent({
-    children
-}: {
-    children: React.ReactNode;
-}) {
+export default function DashboardLayoutComponent({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { userName, isAdmin } = useDashboardLayoutContext();
 
