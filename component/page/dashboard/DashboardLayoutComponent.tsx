@@ -36,9 +36,9 @@ export default function DashboardLayoutComponent({ children }: { children: React
     return (
         <div className="w-screen h-screen flex flex-col">
             <Header setIsSidebarOpen={setIsSidebarOpen} userName={userName} isAdmin={isAdmin} />
-            <div className="flex w-full h-full flex-1">
+            <div className="flex w-full flex-1 overflow-y-hidden">
                 <Sidebar isSidebarOpen={isSidebarOpen} isAdmin={isAdmin} />
-                <div className="w-full h-full p-[1.5rem] bg-[#edededcc] dark:bg-[#202b48]">{children}</div>
+                <div id="dashboard-container" className="w-full h-full p-[1.5rem] bg-[#edededcc] dark:bg-[#202b48] overflow-y-auto box-border">{children}</div>
             </div>
         </div>
     );

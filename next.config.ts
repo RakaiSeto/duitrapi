@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         unoptimized: true,
     },
     serverExternalPackages: ['pg'],
+    webpack: (config) => {
+        config.resolve.alias['./locale'] = 'moment/locale';
+        return config;
+    },
 };
 
 export default nextConfig;

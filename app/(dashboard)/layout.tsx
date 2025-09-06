@@ -1,4 +1,4 @@
-import DashboardLayoutComponent from '@/component/page/DashboardLayoutComponent';
+import DashboardLayoutComponent from '@/component/page/dashboard/DashboardLayoutComponent';
 import { DashboardLayoutProvider } from '@/context/auth/DashboardLayoutContext';
 import { getProfileInfo } from '@/utils/Tools';
 
