@@ -1,6 +1,6 @@
 'use client';
 
-import sidebarMenu from '@/data/sidebar_menu.json';
+import { SIDEBAR_MENU } from '@/data/sidebar_menu';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -25,7 +25,7 @@ export default function Sidebar({ isSidebarOpen, isAdmin }: { isSidebarOpen: boo
             >
                 <div className="h-full px-3 pt-[2rem] pb-[1.5rem] overflow-y-auto">
                     <ul className={`space-y-2 font-medium ${isSidebarOpen ? 'block' : 'hidden'}`}>
-                        {sidebarMenu[isAdmin ? 'admin' : 'user'].map((item, index) => (
+                        {SIDEBAR_MENU[isAdmin ? 'admin' : 'user'].map((item, index) => (
                             <li key={index}>
                                 <a
                                     href={item.href}
