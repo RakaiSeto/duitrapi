@@ -11,18 +11,30 @@ export const create = async (payload: Transactions): Promise<Transactions> => {
 };
 
 export const getAll = async (filter?: GetAllTransactionsFilter): Promise<Transactions[]> => {
+    const conditions = [];
+    if (filter?.categoryId) {
+        conditions.push(ilike(transactionsTable.categoryId, `%${filter.categoryId}%`));
+    }
+    if (filter?.startWalletId) {
+        conditions.push(ilike(transactionsTable.startWallet, `%${filter.startWalletId}%`));
+    }
+    if (filter?.endWalletId) {
+        conditions.push(ilike(transactionsTable.endWallet, `%${filter.endWalletId}%`));
+    }
+    if (filter?.startTime) {
+        conditions.push(gt(transactionsTable.transactionDate, filter.startTime));
+    }
+    if (filter?.endTime) {
+        conditions.push(lt(transactionsTable.transactionDate, filter.endTime));
+    }
+    if (filter?.userId) {
+        conditions.push(ilike(transactionsTable.userId, `%${filter.userId}%`));
+    }
+
     const transactions = await db
         .select()
         .from(transactionsTable)
-        .where(
-            and(
-                ilike(transactionsTable.categoryId, `%${filter?.categoryId ?? ''}%`),
-                ilike(transactionsTable.startWallet, `%${filter?.startWalletId ?? ''}%`),
-                ilike(transactionsTable.endWallet, `%${filter?.endWalletId ?? ''}%`),
-                filter?.startTime ? gt(transactionsTable.transactionDate, filter.startTime) : undefined,
-                filter?.endTime ? lt(transactionsTable.transactionDate, filter.endTime) : undefined,
-                ilike(transactionsTable.userId, `%${filter?.userId ?? ''}%`)
-            ));
+        .where(and(...conditions));
     return transactions;
 };
 

@@ -21,7 +21,7 @@ export function getCurrentTimestamp() {
     const timestamp = Date.now();
     const dateInSpecificTimezone = moment(timestamp).tz('Asia/Jakarta'); // Example: New York time zone
 
-    const readableSpecificTimezone = dateInSpecificTimezone.format('YYYY-MM-DD HH:mm:ss z'); // Example: "2025-08-19 10:01:00 EDT"
+    const readableSpecificTimezone = dateInSpecificTimezone.format('YYYY-MM-DD HH:mm:ss'); // Example: "2025-08-19 10:01:00 EDT"
     return readableSpecificTimezone;
 }
 

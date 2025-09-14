@@ -98,6 +98,7 @@
                 });
 
                 if (response.ok) {
+                    
                     router.push('/login');
                 } else {
                     const errorData = await response.json();

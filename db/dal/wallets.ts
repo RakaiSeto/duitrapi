@@ -3,7 +3,7 @@ import { GetAllWalletsFilter } from './filters/walletsFilter';
 import db from '../connection';
 import { and, ilike, eq } from 'drizzle-orm';
 
-type Wallets = typeof walletsTable.$inferSelect;
+export type Wallets = typeof walletsTable.$inferSelect;
 
 export const create = async (payload: Wallets): Promise<Wallets> => {
     const wallet = await db.insert(walletsTable).values(payload).returning();
@@ -11,14 +11,20 @@ export const create = async (payload: Wallets): Promise<Wallets> => {
 };
 
 export const getAll = async (filter?: GetAllWalletsFilter): Promise<Wallets[]> => {
+    const conditions = [];
+
+    if (filter?.walletName) {
+        conditions.push(ilike(walletsTable.walletName, `%${filter.walletName}%`));
+    }
+
+    if (filter?.userId) {
+        conditions.push(ilike(walletsTable.userId, `%${filter.userId}%`));
+    }
+
     const wallets = await db
         .select()
         .from(walletsTable)
-        .where(
-            and(
-                ilike(walletsTable.walletName, `%${filter?.walletName ?? ''}%`),
-                ilike(walletsTable.userId, `%${filter?.userId ?? ''}%`)
-            ));
+        .where(and(...conditions));
     return wallets;
 };
 
@@ -35,7 +41,7 @@ export const update = async (id: string, payload: Wallets): Promise<Wallets> => 
     return wallet[0] as Wallets;
 };
 
-    export const deleteWallet = async (id: string): Promise<Wallets> => {
+export const deleteWallet = async (id: string): Promise<Wallets> => {
     const wallet = await db.update(walletsTable).set({ deletedAt: new Date() }).where(eq(walletsTable.walletId, id)).returning();
     return wallet[0] as Wallets;
 };

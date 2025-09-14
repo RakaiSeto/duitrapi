@@ -11,14 +11,18 @@ export const create = async (payload: Categories): Promise<Categories> => {
 };
 
 export const getAll = async (filter?: GetAllCategoriesFilter): Promise<Categories[]> => {
+    const conditions = [];
+    if (filter?.categoryName) {
+        conditions.push(ilike(categoriesTable.categoryName, `%${filter.categoryName}%`));
+    }
+    if (filter?.userId) {
+        conditions.push(ilike(categoriesTable.userId, `%${filter.userId}%`));
+    }
+
     const categories = await db
         .select()
         .from(categoriesTable)
-        .where(
-            and(
-                ilike(categoriesTable.categoryName, `%${filter?.categoryName ?? ''}%`),
-                ilike(categoriesTable.userId, `%${filter?.userId ?? ''}%`)
-            ));
+        .where(and(...conditions));
     return categories;
 };
 

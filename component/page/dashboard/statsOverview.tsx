@@ -6,15 +6,15 @@ library.add(fas)
 
 export default function StatsOverview({color, icon, title, description, value}: {color: string, icon: string, title: string, description: string, value: string}) {
     return (
-        <div className="flex flex-col gap-y-2 border border-gray-700 rounded-lg p-3">
-            <div className="flex justify-between gap-x-2">
+        <div className="flex flex-col gap-y-2 border border-gray-700 rounded-lg p-3" style={{backgroundColor: `${color}`}}>
+            <div className="flex justify-between gap-x-2" style={{color: `#ffffff`}}>
                 <span className="text-sm">{title}</span>
-                <FontAwesomeIcon icon={`fa-solid ${icon}`} color={color} />
+                <FontAwesomeIcon icon={`fa-solid ${icon}`} />
             </div>
-            <div className={`text-2xl p-3 rounded-lg text-white`} style={{ backgroundColor: `${color}` }}>
-                {value}
+            <div className={`text-2xl p-3 rounded-lg text-white`}>
+                Rp. {value}
             </div>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-white">
                 {description}
             </span>
         </div>

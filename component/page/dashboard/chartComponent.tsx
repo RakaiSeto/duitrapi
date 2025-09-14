@@ -6,22 +6,25 @@ import {
     CategoryScale,
     LinearScale,
     PointElement,
+    BarElement,
     LineElement,
     Title,
     Tooltip,
     Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import { useTheme } from '@/utils/ThemeProvider';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
 
 export default function ChartComponent() {
     // get foreground color from theme
     const { theme } = useTheme();
     let foreground = '#000000';
+    let grid = 'rgba(0, 0, 0, 0.2)';
     if (theme === 'dark') {
         foreground = '#FFFFFF';
+        grid = 'rgba(255, 255, 255, 0.2)';
     }
 
     // get last 7 day in gmt+7
@@ -48,9 +51,17 @@ export default function ChartComponent() {
         absMax += 1;
     }
 
-    const data = {
+    const data1 = {
         labels: labels,
         datasets: [
+            {
+                label: 'In Transaction',
+                data: values2,
+                borderColor: '#0fba09',
+                backgroundColor: '#0fba09',
+                tension: 0,
+                hidden: true
+            },
             {
                 label: 'Out Transaction',
                 data: values1,
@@ -58,24 +69,10 @@ export default function ChartComponent() {
                 backgroundColor: '#f72f2f',
                 tension: 0,
             },
-            {
-                label: 'In Transaction',
-                data: values2,
-                borderColor: '#0fba09',
-                backgroundColor: '#0fba09',
-                tension: 0,
-            },
-            {
-                label: 'Net Transaction',
-                data: values3,
-                borderColor: '#ff7a0d',
-                backgroundColor: '#ff7a0d',
-                tension: 0,
-            },
         ],
     };
 
-    const options = {
+    const options1 = {
         responsive: true,
         plugins: {
             legend: {
@@ -94,7 +91,7 @@ export default function ChartComponent() {
             x: {
                 // Correctly set the grid and text color for the x-axis
                 grid: {
-                    color: 'rgba(255, 255, 255, 0.2)',
+                    color: `${grid}`,
                 },
                 ticks: {
                     color: `${foreground}`,
@@ -102,7 +99,7 @@ export default function ChartComponent() {
             },
             y: {
                 // Set the symmetrical min and max
-                min: -absMax,
+                min: 0,
                 max: absMax,
 
                 // Style the grid lines
@@ -112,7 +109,7 @@ export default function ChartComponent() {
                         if (context.tick.value === 0) {
                             return foreground; // Bolder color for the zero line
                         }
-                        return 'rgba(255, 255, 255, 0.2)'; // Regular grid line color
+                        return `${grid}`; // Regular grid line color
                     },
                     // You can also set different line widths
                     lineWidth: (context: any) => {
@@ -129,19 +126,90 @@ export default function ChartComponent() {
         },
     };
 
+    const options2 = {
+        plugins: {
+            legend: {
+                position: 'top' as const,
+                labels: {
+                    color: `${foreground}`,
+                },
+            },
+            title: {
+                display: true,
+                text: 'Daily Transaction Value (Rp)',
+                color: `${foreground}`,
+            },
+        },
+        responsive: true,
+        interaction: {
+            mode: 'index' as const,
+            intersect: false,
+        },
+        scales: {
+            x: {
+                stacked: true,
+                grid: {
+                    color: `${grid}`,
+                },
+                ticks: {
+                    color: `${foreground}`,
+                },
+            },
+            y: {
+                max: absMax,
+                stacked: true,
+                // Style the grid lines
+                grid: {
+                    // Use a function to set a different color for the zero line
+                    color: (context: any) => {
+                        if (context.tick.value === 0) {
+                            return foreground; // Bolder color for the zero line
+                        }
+                        return `${grid}`; // Regular grid line color
+                    },
+                    // You can also set different line widths
+                    lineWidth: (context: any) => {
+                        if (context.tick.value === 0) {
+                            return 2; // Make the zero line thicker
+                        }
+                        return 1; // Regular line thickness
+                    },
+                },
+                ticks: {
+                    color: foreground,
+                },
+            },
+        },
+    };
+
+    const data2 = {
+        labels,
+        datasets: [
+            {
+                label: 'Inflow',
+                data: values2,
+                borderColor: '#0fba09',
+                backgroundColor: '#0fba09',
+                stack: 'Stack 1',
+                hidden: true
+            },
+            {
+                label: 'Outflow',
+                data: values1,
+                borderColor: '#f72f2f',
+                backgroundColor: '#f72f2f',
+                stack: 'Stack 0',
+            }
+        ],
+    };
+
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white dark:bg-[#091636d9] p-4 rounded-lg w-full">
-                <Line options={options} data={data} />
+        <div className="grid-cols-1 xl:grid-cols-2 gap-4 hidden md:grid">
+            <div className="bg-[#f0f0f0] dark:bg-[#1f2a47] p-4 rounded-lg w-full flex justify-center my-2">
+                <Line options={options1} data={data1} />
             </div>
-            <div className="bg-white dark:bg-[#091636d9] p-4 rounded-lg w-full">
-                <Line options={options} data={data} />
-            </div>
-            <div className="bg-white dark:bg-[#091636d9] p-4 rounded-lg w-full">
-                <Line options={options} data={data} />
-            </div>
-            <div className="bg-white dark:bg-[#091636d9] p-4 rounded-lg w-full">
-                <Line options={options} data={data} />
+            <div className="bg-[#f0f0f0] dark:bg-[#1f2a47] p-4 rounded-lg w-full flex justify-center my-2">
+                <Bar options={options2} data={data2} />
             </div>
         </div>
     );
