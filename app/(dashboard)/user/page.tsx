@@ -3,7 +3,7 @@
 import { useDashboardLayoutContext } from '@/context/auth/DashboardLayoutContext';
 import StatsOverview from '@/component/page/dashboard/statsOverview';
 import dynamic from 'next/dynamic';
-import { Wallets } from '@/db/dal/wallets';
+import { WalletsWithLatestTransactions } from '@/db/dal/wallets';
 import { useEffect, useState } from 'react';
 import WalletInfo from '@/component/page/dashboard/walletInfo';
 
@@ -16,12 +16,24 @@ const DynamicChartComponent = dynamic(() => import('@/component/page/dashboard/c
 
 export default function DashboardPage() {
     const { userName } = useDashboardLayoutContext();
-    const [wallets, setWallets] = useState<Wallets[]>([]);
+    const [wallets, setWallets] = useState<WalletsWithLatestTransactions[]>([]);
+    const [totalBalance, setTotalBalance] = useState<number>(0);
+    const [monthlyExpenses, setMonthlyExpenses] = useState<number>(0);
+    const [monthlyIncome, setMonthlyIncome] = useState<number>(0);
+    const [dailyExpenses, setDailyExpenses] = useState<number>(0);
+    const [weeklyTransactionCount, setWeeklyTransactionCount] = useState<number[][]>([[], []]);
+    const [weeklyTransactionAmount, setWeeklyTransactionAmount] = useState<number[][]>([[], []]);
     useEffect(() => {
         const fetchWallets = async () => {
             const response = await fetch('/api/user/dashboard');
             const data = await response.json();
             setWallets(data.data.wallet);
+            setTotalBalance(data.data.totalBalance);
+            setMonthlyExpenses(data.data.monthlyExpenses);
+            setMonthlyIncome(data.data.monthlyIncome);
+            setDailyExpenses(data.data.dailyExpenses);
+            setWeeklyTransactionCount(data.data.weeklyTransactionCount);
+            setWeeklyTransactionAmount(data.data.weeklyTransactionAmount);
         };
         fetchWallets();
     }, []);
@@ -42,33 +54,33 @@ export default function DashboardPage() {
                         icon="fa-money-check-dollar"
                         title="Total Balance"
                         description="Total balance of all wallets"
-                        value="1,000"
+                        value={totalBalance.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     />
                     <StatsOverview
                         color="#f82f2f"
                         icon="fa-money-bill-transfer"
                         title="Monthly Expenses"
                         description="How much money you spent this month"
-                        value="88,888,888,888"
+                        value={monthlyExpenses.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     />
                     <StatsOverview
                         color="#10bb0a"
                         icon="fa-money-bill-trend-up"
                         title="Monthly Income"
                         description="How much money you get this month"
-                        value="1,000"
+                        value={monthlyIncome.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     />
                     <StatsOverview
                         color="#ff7b0d"
                         icon="fa-calendar-days"
                         title="Daily Expenses"
                         description="How much money you spent today"
-                        value="1,000"
+                        value={dailyExpenses.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     />
                 </div>
 
                 {/* stats cards */}
-                <DynamicChartComponent />
+                <DynamicChartComponent weeklyTransactionCount={weeklyTransactionCount} weeklyTransactionAmount={weeklyTransactionAmount} />
 
                 {/* wallet info */}
                 <WalletInfo wallets={wallets} />

@@ -12,7 +12,7 @@ export default function StatsOverview({color, icon, title, description, value}: 
                 <FontAwesomeIcon icon={`fa-solid ${icon}`} />
             </div>
             <div className={`text-2xl p-3 rounded-lg text-white`}>
-                Rp. {value}
+                {value}
             </div>
             <span className="text-sm text-white">
                 {description}

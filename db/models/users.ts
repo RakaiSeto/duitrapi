@@ -10,4 +10,5 @@ export const usersTable = pgTable('users', {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   deletedAt: timestamp("deleted_at"),
+  lastLogin: timestamp("last_login"),
 });

@@ -17,7 +17,7 @@ import { useTheme } from '@/utils/ThemeProvider';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
 
-export default function ChartComponent() {
+export default function ChartComponent({ weeklyTransactionCount, weeklyTransactionAmount }: { weeklyTransactionCount: number[][], weeklyTransactionAmount: number[][] }) {
     // get foreground color from theme
     const { theme } = useTheme();
     let foreground = '#000000';
@@ -33,22 +33,28 @@ export default function ChartComponent() {
         date.setDate(date.getDate() - i);
         return {
             date: date,
-            value1: Math.floor(Math.random() * 10),
-            value2: Math.floor(Math.random() * 10),
         };
     }).reverse();
 
     // Correctly format the data for Chart.js
     const labels = last7DaysData.map((d) => d.date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }));
-    const values1 = last7DaysData.map((d) => d.value1);
-    const values2 = last7DaysData.map((d) => d.value2);
-    const values3 = last7DaysData.map((d) => d.value1 - d.value2);
+    const values1 = weeklyTransactionCount[0];
+    const values2 = weeklyTransactionCount[1];
 
-    const allValues = [...values1, ...values2, ...values3];
+    const values4 = weeklyTransactionAmount[0];
+    const values5 = weeklyTransactionAmount[1];
+
+    const allValues = [...values1, ...values2];
+    const allValues2 = [...values4, ...values5];
     let absMax = Math.max(...allValues.map(Math.abs));
+    let absMax2 = Math.max(...allValues2.map(Math.abs));
 
     if (absMax % 2 !== 0) {
         absMax += 1;
+    }
+
+    if (absMax2 % 100000 !== 0) {
+        absMax2 += 100000 - (absMax2 % 100000);
     }
 
     const data1 = {
@@ -60,7 +66,7 @@ export default function ChartComponent() {
                 borderColor: '#0fba09',
                 backgroundColor: '#0fba09',
                 tension: 0,
-                hidden: true
+                hidden: true,
             },
             {
                 label: 'Out Transaction',
@@ -100,7 +106,7 @@ export default function ChartComponent() {
             y: {
                 // Set the symmetrical min and max
                 min: 0,
-                max: absMax,
+                max: absMax > 5 ? absMax : 5,
 
                 // Style the grid lines
                 grid: {
@@ -156,7 +162,7 @@ export default function ChartComponent() {
                 },
             },
             y: {
-                max: absMax,
+                max: absMax2 > 50000 ? absMax2 : 50000,
                 stacked: true,
                 // Style the grid lines
                 grid: {
@@ -187,19 +193,19 @@ export default function ChartComponent() {
         datasets: [
             {
                 label: 'Inflow',
-                data: values2,
+                data: values5,
                 borderColor: '#0fba09',
                 backgroundColor: '#0fba09',
                 stack: 'Stack 1',
-                hidden: true
+                hidden: true,
             },
             {
                 label: 'Outflow',
-                data: values1,
+                data: values4,
                 borderColor: '#f72f2f',
                 backgroundColor: '#f72f2f',
                 stack: 'Stack 0',
-            }
+            },
         ],
     };
 
