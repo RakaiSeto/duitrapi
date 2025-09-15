@@ -1,4 +1,3 @@
-import { hashPassword } from '@/utils/Bcrypt';
 import { usersTable } from '../models/users';
 import { GetAllUsersFilter } from './filters/usersFilter';
 import db from '../connection';

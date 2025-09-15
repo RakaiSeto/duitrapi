@@ -29,6 +29,9 @@ export async function middleware(request: NextRequest) {
         if (!isAuthenticated && !isLoginPath) {
             return NextResponse.redirect(new URL('/login', request.url));
         }
+        decoded.exp = Date.now() + 1000 * 60 * 60 * 24;
+        const newToken = await jwt.generateJwt(decoded);
+        request.cookies.set('token', newToken);
     }
 
     if (isAdmin && !isAdminPath) {
