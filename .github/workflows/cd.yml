@@ -27,4 +27,4 @@ jobs:
             sudo rm -rf .next
             npm i
             npm run build
-            pm2 restart 10
+            pm2 reload duitrapi --env production
