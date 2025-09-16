@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 import * as jwt from '@/utils/Session';
 import { JwtPayload } from '@/utils/Session';
 
+const BASE_URL = process.env.BASE_URL;
 export async function middleware(request: NextRequest) {
     const isLoginOrRegisterPath = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register');
     const isAdminPath = request.nextUrl.pathname.startsWith('/admin');
@@ -42,23 +43,23 @@ export async function middleware(request: NextRequest) {
     // If not authenticated, redirect to login unless on login/register pages
     if (!isAuthenticated) {
         if (!isLoginOrRegisterPath) {
-            return NextResponse.redirect(new URL('/login', request.nextUrl));
+            return NextResponse.redirect(new URL('/login', BASE_URL));
         }
         return NextResponse.next();
     }
 
     // If authenticated, redirect away from login/register pages
     if (isLoginOrRegisterPath) {
-        return NextResponse.redirect(new URL('/dashboard', request.nextUrl));
+        return NextResponse.redirect(new URL('/dashboard', BASE_URL));
     }
     
     // If authenticated, check admin status
     if (isAdmin && !isAdminPath) {
-        return NextResponse.redirect(new URL('/admin', request.nextUrl));
+        return NextResponse.redirect(new URL('/admin', BASE_URL));
     }
 
     if (!isAdmin && isAdminPath) {
-        return NextResponse.redirect(new URL('/dashboard', request.nextUrl));
+        return NextResponse.redirect(new URL('/dashboard', BASE_URL));
     }
 
     // Otherwise, continue to the requested page
