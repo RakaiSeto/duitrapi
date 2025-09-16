@@ -27,4 +27,5 @@ jobs:
             sudo rm -rf .next
             npm i
             npm run build
-            pm2 reload duitrapi
+            pm2 delete duitrapi
+            pm2 start ecosystem.config.js --env production --update-env
