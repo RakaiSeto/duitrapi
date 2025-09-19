@@ -31,7 +31,7 @@ export default function Sidebar({ isSidebarOpen, isAdmin }: { isSidebarOpen: boo
                                     href={item.href}
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                                 >
-                                    <FontAwesomeIcon icon={`fa-solid ${item.icon}`} />
+                                    <FontAwesomeIcon icon={[`fas`, item.icon as any]} />
                                     <span className="ms-3 pt-1">{item.display}</span>
                                 </a>
                             </li>
