@@ -8,7 +8,7 @@ export function ThemeSwitcher() {
         <div className="cursor-pointer ">
             <button
                 type="button"
-                className={`flex items-center gap-x-2 py-2 px-3 bg-[#bac0d3] rounded-full text-sm text-white hover:bg-[#616c89] focus:outline-hidden focus:bg-[#616c89] cursor-pointer ${
+                className={`flex items-center gap-x-2 py-2 px-3 rounded-full border text-sm bg-[#fbfbfb] hover:bg-[#374151] hover:text-white focus:outline-hidden focus:bg-[#616c89] cursor-pointer ${
                     theme === 'dark' ? 'hidden' : ''
                 }`}
                 id="themeSwitcherDarkButton"

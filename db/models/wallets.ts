@@ -9,3 +9,5 @@ export const walletsTable = pgTable('wallets', {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   deletedAt: timestamp("deleted_at"),
 });
+
+export type Wallets = typeof walletsTable.$inferSelect;

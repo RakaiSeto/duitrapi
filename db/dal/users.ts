@@ -11,12 +11,18 @@ export const create = async (payload: Users): Promise<Users> => {
 };
 
 export const getAll = async (filter?: GetAllUsersFilter): Promise<Users[]> => {
+    const conditions = [];
+    if (filter?.fullname) {
+        conditions.push(ilike(usersTable.fullname, `%${filter.fullname}%`));
+    }
+    if (filter?.email) {
+        conditions.push(ilike(usersTable.email, `%${filter.email}%`));
+    }
+
     const users = await db
         .select()
         .from(usersTable)
-        .where(
-            and(ilike(usersTable.fullname, `%${filter?.fullname ?? ''}%`), ilike(usersTable.email, `%${filter?.email ?? ''}%`))
-        );
+        .where(and(...conditions));
     return users;
 };
 

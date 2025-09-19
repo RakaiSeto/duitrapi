@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import * as bcryptUtil from '@/utils/Bcrypt';
 import { randomAlphanumeric } from '@/utils/Tools';
 import { logToQueue } from '@/utils/Queue';
+import * as walletDal from '@/db/dal/wallets';
 
 export async function GET(request: NextRequest) {
     try {
@@ -42,7 +43,17 @@ export async function POST(request: NextRequest) {
         console.log(hashedPW)
         payload.roleId = 2;
         const user = await userDal.create(payload);
-        logToQueue(payload.email, 'AUTH', 'Register', true, 'User created')
+        logToQueue(payload.email, 'AUTH', 'Register', true, 'User created');
+        const _ = await walletDal.create({
+            walletId: 'WALLET-' + randomAlphanumeric(10),
+            userId: user.userId,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            deletedAt: null,
+            walletName: 'Cash',
+            walletBalance: 0,
+        });
+        logToQueue(payload.email, 'AUTH', 'Register', true, 'Default wallet Cash created');
         return NextResponse.json(user);
     } catch (error: unknown) {  
         console.error('Error creating user:', error);

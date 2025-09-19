@@ -1,5 +1,4 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
-import test from 'node:test';
 import { Pool } from 'pg';
 // Initialize the PostgreSQL connection pool
 const pool = new Pool({

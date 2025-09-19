@@ -1,5 +1,7 @@
-{
-    "default": [
+import { NavbarMenuData } from "@/models/navbarMenu";
+
+export const NAVBAR_MENU: NavbarMenuData = {
+    default: [
         {
             "display": "Home",
             "href": "#"

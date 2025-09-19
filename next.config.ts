@@ -10,7 +10,11 @@ const nextConfig: NextConfig = {
         domains: ['placehold.co'],
         unoptimized: true,
     },
-    serverExternalPackages: ['sequelize', 'pg'],
+    serverExternalPackages: ['pg'],
+    webpack: (config) => {
+        config.resolve.alias['./locale'] = 'moment/locale';
+        return config;
+    },
 };
 
 export default nextConfig;
