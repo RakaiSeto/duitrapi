@@ -18,6 +18,10 @@ export async function POST(request: NextRequest) {
             logToQueue(user.email, 'AUTH', 'Login', false, 'Invalid password')
             return NextResponse.json({ success: false, type: 'password', message: 'Invalid password' }, { status: 401 });
         }
+
+        user.lastLogin = new Date();
+        await userDal.update(user.userId, user);
+
         let jwtPayload: JwtPayload = {
             sub: user.userId,
             email: user.email,
