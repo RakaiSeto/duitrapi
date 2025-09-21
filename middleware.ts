@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
                 // Token refresh logic: A better approach would be to refresh only when it's nearing expiration,
                 // not on every request. This is for demonstration.
-                if (decoded.exp && decoded.exp * 1000 - Date.now() < 1000 * 60 * 60) { // 30 minutes from expiration
+                if (decoded.exp && ((decoded.exp - Date.now()) < 1000 * 60 * 60)) { // 30 minutes from expiration
                     const refreshedToken = await jwt.generateJwt(decoded);
                     request.cookies.set('token', refreshedToken);
                     return NextResponse.next();
